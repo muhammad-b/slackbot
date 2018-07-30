@@ -18,12 +18,14 @@
     "babel-preset-env": "^1.7.0",
     "eslint": "^5.2.0",
     "eslint-config-airbnb": "^17.0.0",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.10.0",
     "prettier": "^1.14.0"
   },
   "dependencies": {
+    "dotenv": "^6.0.0",
     "slackbots": "^1.1.0"
   },
   "repository": {
