@@ -1,4 +1,4 @@
-# norrisbot
+# Slack Bot
 
 ## Database
 
@@ -6,5 +6,5 @@
 
 ## Packages
 
-npm i -D babel-cli babel-preset-env
-npm i -S slackbots
+`npm i -D babel-cli babel-preset-env`
+`npm i -S slackbots`
