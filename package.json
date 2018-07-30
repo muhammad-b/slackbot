@@ -1,0 +1,29 @@
+{
+  "name": "slackbot",
+  "version": "1.0.0",
+  "description": "Building a Slack Bot with Node.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel-node ./src/index.js"
+  },
+  "author": "Ricardo Proença <ricproenca@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.12.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  },
+  "dependencies": {
+    "slackbots": "^1.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ricproenca/slackbot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ricproenca/slackbot/issues"
+  },
+  "homepage": "https://github.com/ricproenca/slackbot#readme"
+}
