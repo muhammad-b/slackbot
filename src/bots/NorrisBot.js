@@ -36,7 +36,6 @@ class NorrisBot {
     await this._loadBotUser();
     await this._checkApiConnection();
     this._postInitalMessageToChannel();
-    this._postInitalMessageToChannel();
   }
 
   /**
