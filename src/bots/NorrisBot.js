@@ -3,7 +3,9 @@ import axios from 'axios';
 
 const DEFAULT_CHANNEL = 'general';
 const DEFAULT_PARAMS = { icon_emoji: ':chuck_norris:' };
+const HELP_COMMAND = 'norrisbot-help';
 const API_URL = 'http://api.icndb.com/jokes/random';
+
 /**
  *  The mighty "NorrisBot" is a bot that basically kicks asses!!!
  *  To put it another way, it brings a bit of Chuck Norris into the Slack!
@@ -11,6 +13,8 @@ const API_URL = 'http://api.icndb.com/jokes/random';
 class NorrisBot {
   constructor(settings = {}) {
     this.settings = settings;
+    this.settings.channel = DEFAULT_CHANNEL;
+    this.settings.params = DEFAULT_PARAMS;
 
     this.bot = new SlackBots({
       token: settings.token,
@@ -18,7 +22,6 @@ class NorrisBot {
     });
 
     this.user = null;
-    this.jokes = [];
   }
 
   /**
@@ -76,7 +79,7 @@ class NorrisBot {
     await this.bot
       .postMessageToChannel(
         channel,
-        `Hello ${channel}! Type 'norrisbot-help' to check what I'm capable!`,
+        `Hello ${channel}! Type ${HELP_COMMAND} to check what I'm capable!`,
         params
       )
       .then(() => {
@@ -94,13 +97,12 @@ class NorrisBot {
    * @param {*} message
    */
   _onMessage(message) {
-    // eslint-disable-next-line no-console
-    if (
-      this._isChatMessage(message) &&
-      !this._isFromNorrisBot(message) &&
-      this._isMentioningChuckNorris(message)
-    ) {
-      this._replyWithRandomJoke();
+    if (this._isChatMessage(message) && !this._isFromNorrisBot(message)) {
+      if (this._isMentioningChuckNorris(message)) {
+        this._replyWithRandomJoke();
+      } else if (this._isMentioningHelpMessage(message)) {
+        this._replyWithHelpCommand();
+      }
     }
   }
 
@@ -124,6 +126,7 @@ class NorrisBot {
 
   /**
    * Checks if the message mentions Chuck Norris
+   *
    * @param {object} message
    */
   _isMentioningChuckNorris(message) {
@@ -131,16 +134,35 @@ class NorrisBot {
   }
 
   /**
+   * Checks if the message mentions 'chuck-norris-help'
+   *
+   * @param {object} message
+   */
+  _isMentioningHelpMessage(message) {
+    return message.text.toLowerCase().includes('norrisbot-help');
+  }
+
+  /**
+   * Reply to general channel with a random joke
    *
    * @param {object} message
    */
   async _replyWithRandomJoke() {
-    const channel = this.settings.channel || DEFAULT_CHANNEL;
-    const params = this.settings.params || DEFAULT_PARAMS;
     const response = await axios.get(API_URL);
     if (response.data && response.data.type === 'success') {
-      this.bot.postMessageToChannel(channel, response.data.value.joke, params);
+      const { joke } = response.data.value;
+      this.bot.postMessageToChannel(this.settings.channel, joke, this.settings.params);
     }
+  }
+
+  /**
+   * Reply to general channel with the help sentence
+   *
+   * @param {object} message
+   */
+  _replyWithHelpCommand() {
+    const message = 'Type "chuck norris" to get one random joke.';
+    this.bot.postMessageToChannel(this.settings.channel, message, this.settings.params);
   }
 }
 
