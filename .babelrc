@@ -3,11 +3,7 @@
     [
       "env",
       {
-        "exclude": ["transform-es2015-classes"],
-        "debug": {
-          "sourceMap": "inline",
-          "retainLines": true
-        }
+        "exclude": ["transform-es2015-classes"]
       }
     ]
   ]
