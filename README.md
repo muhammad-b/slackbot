@@ -17,3 +17,5 @@
 ### .babelrc
 
 `"debug": { "sourceMap": "inline", "retainLines": true }`
+
+## To see it work, write private message to chuck_norris_bot

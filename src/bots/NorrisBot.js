@@ -95,14 +95,13 @@ class NorrisBot {
    */
   _onMessage(message) {
     // eslint-disable-next-line no-console
-    this._replyWithRandomJoke();
-    // if (
-    //   this._isChatMessage(message) &&
-    //   !this._isFromNorrisBot(message) &&
-    //   this._isMentioningChuckNorris(message)
-    // ) {
-    //   this._replyWithRandomJoke();
-    // }
+    if (
+      this._isChatMessage(message) &&
+      !this._isFromNorrisBot(message) &&
+      this._isMentioningChuckNorris(message)
+    ) {
+      this._replyWithRandomJoke();
+    }
   }
 
   /**
@@ -128,7 +127,7 @@ class NorrisBot {
    * @param {object} message
    */
   _isMentioningChuckNorris(message) {
-    return message.text.toLowerCase().includes('chuck norris') > -1;
+    return message.text.toLowerCase().includes('chuck norris');
   }
 
   /**
@@ -140,7 +139,6 @@ class NorrisBot {
     const params = this.settings.params || DEFAULT_PARAMS;
     const response = await axios.get(API_URL);
     if (response.data && response.data.type === 'success') {
-      console.log('_replyWithRandomJoke', response.data);
       this.bot.postMessageToChannel(channel, response.data.value.joke, params);
     }
   }
